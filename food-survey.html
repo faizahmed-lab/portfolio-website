@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Survey Form</title>
+</head>
+<body>
+    <h1>Food Preferences Survey</h1>
+    <p>Please answer a few questions about your food preferences.</p>
+
+    <form action="#" method="get">
+        <fieldset>
+            <legend>About You</legend>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <br><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </fieldset>
+
+        <br>
+
+        <fieldset>
+            <legend>Your Food Preferences</legend>
+
+            <p>What type of food do you enjoy most?</p>
+            <input type="radio" id="indian" name="food-type" value="Indian" required>
+            <label for="indian">Indian</label><br>
+
+            <input type="radio" id="italian" name="food-type" value="Italian">
+            <label for="italian">Italian</label><br>
+
+            <input type="radio" id="chinese" name="food-type" value="Chinese">
+            <label for="chinese">Chinese</label><br>
+
+            <input type="radio" id="other" name="food-type" value="Other">
+            <label for="other">Other</label>
+
+            <br><br>
+
+            <label for="meal">Which meal do you enjoy most?</label>
+            <select id="meal" name="favorite-meal" required>
+                <option value="">Choose one</option>
+                <option value="breakfast">Breakfast</option>
+                <option value="lunch">Lunch</option>
+                <option value="dinner">Dinner</option>
+                <option value="snacks">Snacks</option>
+            </select>
+
+            <p>Which of these foods do you like?</p>
+            <input type="checkbox" id="pizza" name="liked-foods" value="Pizza">
+            <label for="pizza">Pizza</label><br>
+
+            <input type="checkbox" id="biryani" name="liked-foods" value="Biryani">
+            <label for="biryani">Biryani</label><br>
+
+            <input type="checkbox" id="pasta" name="liked-foods" value="Pasta">
+            <label for="pasta">Pasta</label><br>
+
+            <input type="checkbox" id="desserts" name="liked-foods" value="Desserts">
+            <label for="desserts">Desserts</label>
+
+            <br><br>
+
+            <label for="rating">How would you rate your eating experience?</label>
+            <select id="rating" name="rating" required>
+                <option value="">Choose a rating</option>
+                <option value="5">Excellent</option>
+                <option value="4">Very good</option>
+                <option value="3">Good</option>
+                <option value="2">Fair</option>
+                <option value="1">Poor</option>
+            </select>
+
+            <br><br>
+
+            <label for="suggestions">Any food or restaurant suggestions?</label><br>
+            <textarea id="suggestions" name="suggestions" rows="5" cols="40"></textarea>
+        </fieldset>
+
+        <br>
+
+        <button type="submit">Submit Survey</button>
+        <button type="reset">Clear Form</button>
+    </form>
+</body>
+</html>
