@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shooting Gallery</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: #eaf4ff;
+      color: #1d2940;
+      font-family: system-ui, sans-serif;
+    }
+
+    .game {
+      width: min(100%, 620px);
+      text-align: center;
+    }
+
+    h1 { margin: 0 0 8px; }
+    .help { margin: 0 0 18px; color: #56647b; }
+    .stats { display: flex; justify-content: center; gap: 12px; margin-bottom: 14px; }
+    .stats span { padding: 8px 14px; border-radius: 999px; background: white; font-weight: 700; }
+
+    .arena {
+      position: relative;
+      height: min(55vh, 360px);
+      min-height: 240px;
+      overflow: hidden;
+      border: 5px solid #fff;
+      border-radius: 20px;
+      background: linear-gradient(#8bd3ff 0 68%, #83c96d 68% 100%);
+      box-shadow: 0 12px 32px #254c7525;
+      cursor: crosshair;
+    }
+
+    .target {
+      position: absolute;
+      display: none;
+      width: 54px;
+      height: 54px;
+      padding: 0;
+      border: 5px solid white;
+      border-radius: 50%;
+      background: #f04e4e;
+      box-shadow: 0 3px 0 #b92d35, inset 0 0 0 7px #ffbd4a;
+      cursor: crosshair;
+      transform: translate(-50%, -50%);
+    }
+
+    .target::after {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    .target.show { display: block; }
+
+    .start {
+      margin-top: 16px;
+      padding: 11px 22px;
+      border: 0;
+      border-radius: 10px;
+      background: #6246ea;
+      color: white;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .start:hover { background: #4e35cc; }
+    .message { min-height: 1.5em; margin: 12px 0 0; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main class="game">
+    <h1>🎯 Shooting Gallery</h1>
+    <p class="help">Click the target as many times as you can in 20 seconds!</p>
+
+    <div class="stats">
+      <span>Score: <b id="score">0</b></span>
+      <span>Time: <b id="time">20</b>s</span>
+    </div>
+
+    <div class="arena" id="arena" aria-label="Shooting game area">
+      <button class="target" id="target" aria-label="Shoot target"></button>
+    </div>
+
+    <button class="start" id="start">Start Game</button>
+    <p class="message" id="message">Press Start Game to play.</p>
+  </main>
+
+  <script>
+    const arena = document.getElementById('arena');
+    const target = document.getElementById('target');
+    const scoreText = document.getElementById('score');
+    const timeText = document.getElementById('time');
+    const message = document.getElementById('message');
+    const startButton = document.getElementById('start');
+
+    let score = 0;
+    let timeLeft = 20;
+    let timer;
+    let playing = false;
+
+    function moveTarget() {
+      const x = 30 + Math.random() * (arena.clientWidth - 60);
+      const y = 30 + Math.random() * (arena.clientHeight - 60);
+      target.style.left = `${x}px`;
+      target.style.top = `${y}px`;
+    }
+
+    function endGame() {
+      playing = false;
+      clearInterval(timer);
+      target.classList.remove('show');
+      startButton.disabled = false;
+      startButton.textContent = 'Play Again';
+      message.textContent =
+        `Time's up! You scored ${score} point${score === 1 ? '' : 's'}.`;
+    }
+
+    startButton.addEventListener('click', () => {
+      score = 0;
+      timeLeft = 20;
+      playing = true;
+      scoreText.textContent = score;
+      timeText.textContent = timeLeft;
+      message.textContent = 'Go!';
+      startButton.disabled = true;
+      target.classList.add('show');
+      moveTarget();
+
+      timer = setInterval(() => {
+        timeLeft--;
+        timeText.textContent = timeLeft;
+        if (timeLeft <= 0) endGame();
+      }, 1000);
+    });
+
+    target.addEventListener('click', (event) => {
+      event.stopPropagation();
+      if (!playing) return;
+
+      score++;
+      scoreText.textContent = score;
+      moveTarget();
+    });
+  </script>
+</body>
+</html>
